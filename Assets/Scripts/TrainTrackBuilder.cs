@@ -6,21 +6,18 @@ using UnityEditor;
 public class TrainTrackBuilder : MonoBehaviour
 {
     [Header("Control Points")]
-    public Transform point0;
-    public Transform point1;
-    public Transform point2;
-    public Transform point3;
+    public List<Transform> controlPoints = new List<Transform>(); // Variable number of control points
 
     [Header("Track Settings")]
     public int segments = 50; // Number of segments to divide the curve into
     public GameObject prefabToPlace; // Prefab to place along the curve
     public float spacing = 1.0f; // Spacing between objects
 
-    private List<Vector3> bezierPoints = new List<Vector3>();
+    public List<Vector3> bezierPoints = new List<Vector3>();
 
     private void OnDrawGizmos()
     {
-        if (point0 == null || point1 == null || point2 == null || point3 == null)
+        if (controlPoints == null || controlPoints.Count < 2)
             return;
 
         // Clear and regenerate the Bézier curve
@@ -29,7 +26,7 @@ public class TrainTrackBuilder : MonoBehaviour
         for (int i = 0; i <= segments; i++)
         {
             float t = i / (float)segments;
-            Vector3 position = CalculateBezierPoint(t, point0.position, point1.position, point2.position, point3.position);
+            Vector3 position = CalculateBezierPoint(t, controlPoints);
             bezierPoints.Add(position);
 
             // Draw the curve in the editor
@@ -47,12 +44,6 @@ public class TrainTrackBuilder : MonoBehaviour
         {
             Debug.LogWarning("Prefab or curve points are missing.");
             return;
-        }
-
-        // Clear existing objects
-        for (int i = transform.childCount - 1; i >= 0; i--)
-        {
-            //DestroyImmediate(transform.GetChild(i).gameObject);
         }
 
         float distanceCovered = 0f;
@@ -78,20 +69,30 @@ public class TrainTrackBuilder : MonoBehaviour
         }
     }
 
-    private Vector3 CalculateBezierPoint(float t, Vector3 p0, Vector3 p1, Vector3 p2, Vector3 p3)
+    public Vector3 CalculateBezierPoint(float t, List<Transform> points)
     {
-        float u = 1 - t;
-        float tt = t * t;
-        float uu = u * u;
-        float uuu = uu * u;
-        float ttt = tt * t;
+        if (points.Count == 0) return Vector3.zero;
 
-        Vector3 point = uuu * p0; // (1-t)^3 * P0
-        point += 3 * uu * t * p1; // 3(1-t)^2 * t * P1
-        point += 3 * u * tt * p2; // 3(1-t) * t^2 * P2
-        point += ttt * p3;        // t^3 * P3
+        List<Vector3> currentPoints = new List<Vector3>();
+        foreach (var point in points)
+        {
+            currentPoints.Add(point.position);
+        }
 
-        return point;
+        while (currentPoints.Count > 1)
+        {
+            List<Vector3> nextPoints = new List<Vector3>();
+
+            for (int i = 0; i < currentPoints.Count - 1; i++)
+            {
+                Vector3 interpolated = Vector3.Lerp(currentPoints[i], currentPoints[i + 1], t);
+                nextPoints.Add(interpolated);
+            }
+
+            currentPoints = nextPoints;
+        }
+
+        return currentPoints[0];
     }
 }
 
