@@ -918,14 +918,14 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 249727340}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.0867874, y: 0.12718049, z: -0.011171587, w: -0.9880123}
-  m_LocalPosition: {x: 1.34, y: -0.53, z: 6.52}
+  m_LocalRotation: {x: 0.1351968, y: 0, z: -0, w: 0.9908188}
+  m_LocalPosition: {x: 0, y: -0.53, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 330585546}
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 10.04, y: -374.67, z: 0}
+  m_Father: {fileID: 473793940}
+  m_LocalEulerAnglesHint: {x: 15.54, y: 0, z: 0}
 --- !u!1 &261526624
 GameObject:
   m_ObjectHideFlags: 0
@@ -1230,7 +1230,7 @@ Transform:
   m_GameObject: {fileID: 330585543}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 1, z: -10}
+  m_LocalPosition: {x: 0, y: 2.81, z: -8.14}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2323,7 +2323,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
-    m_AddedGameObjects: []
+    m_AddedGameObjects:
+    - targetCorrespondingSourceObject: {fileID: -8679921383154817045, guid: 7b971ea89ff70fe4e8673e6db40f8d78, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 249727341}
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 7b971ea89ff70fe4e8673e6db40f8d78, type: 3}
       insertIndex: -1
@@ -2348,11 +2351,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   trackBuilder: {fileID: 1027387920}
   rollingStockPrefab: {fileID: 919132149155446097, guid: 4d397914f97e4a342909021540a9c180, type: 3}
-  rollingStockCount: 3
+  rollingStockCount: 5
   rollingStockSpacing: 3
-  speed: 2
-  gravityForce: 9.81
-  friction: 1
+  speed: 3
+  friction: 0.25
+--- !u!4 &473793940 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 7b971ea89ff70fe4e8673e6db40f8d78, type: 3}
+  m_PrefabInstance: {fileID: 473793935}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &491389445
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -7083,6 +7090,5 @@ SceneRoots:
   m_Roots:
   - {fileID: 410087041}
   - {fileID: 832575519}
-  - {fileID: 249727341}
   - {fileID: 1027387921}
   - {fileID: 473793935}

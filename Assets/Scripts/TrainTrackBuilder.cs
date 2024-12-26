@@ -94,6 +94,27 @@ public class TrainTrackBuilder : MonoBehaviour
 
         return currentPoints[0];
     }
+    
+    public List<float> GetArcLengths(int samples = 100)
+    {
+        List<float> arcLengths = new List<float>();
+        arcLengths.Add(0f);
+
+        float totalLength = 0f;
+        Vector3 prevPoint = CalculateBezierPoint(0f, controlPoints);
+
+        for (int i = 1; i <= samples; i++)
+        {
+            float t = (float)i / samples;
+            Vector3 point = CalculateBezierPoint(t, controlPoints);
+            totalLength += Vector3.Distance(prevPoint, point);
+            arcLengths.Add(totalLength);
+            prevPoint = point;
+        }
+
+        return arcLengths;
+    }
+
 }
 
 [CustomEditor(typeof(TrainTrackBuilder))]
